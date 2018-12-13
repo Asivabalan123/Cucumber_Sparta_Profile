@@ -2,6 +2,17 @@ require 'capybara/dsl'
 
 class Registration
   include Capybara::DSL
+
+  attr_accessor :invalid_username, :invalid_lastname, :invalid_age, :invalid_address, :invalid_email, :invalid_phone_number
+
+  def initialize
+    @invalid_username = "Please enter your first name."
+    @invalid_lastname = "Please enter your last name."
+    @invalid_age = "Please enter your age."
+    @invalid_address = "Please enter an address."
+    @invalid_email = "Please enter an email."
+    @invalid_phone_number = "Please enter a phone number."
+  end
   #Constants-immutable
   HOMEPAGE_URL = 'https://crispyjourney.herokuapp.com/'
   FIRST_NAME_FIELD_ID = "firstName"
@@ -28,7 +39,6 @@ class Registration
   TERMS_FIELD_ID = '#terms'
   RATE_SLIDER_ID = '#value_for_slider'
   SUBMIT_ID = 'button[type="submit"]'
-
 
   def visit_home_page
     visit(HOMEPAGE_URL)
@@ -192,5 +202,29 @@ class Registration
 
   def sign_in
     find(SUBMIT_ID).click
+  end
+
+  def get_error_message_username
+    find(:xpath, '/html/body/div/form/div[1]/div/div').text
+  end
+
+  def get_error_message_lastname
+    find(:xpath, '/html/body/div/form/div[2]/div/div').text
+  end
+
+  def get_error_message_age
+    find(:xpath, '/html/body/div/form/div[3]/div/div').text
+  end
+
+  def get_error_message_address
+    find(:xpath, '/html/body/div/form/div[9]/div').text
+  end
+
+  def get_error_message_email
+    find(:xpath, '/html/body/div/form/div[14]/div/div').text
+  end
+
+  def get_error_message_phone_number
+    find(:xpath,'/html/body/div/form/div[16]/div/div').text
   end
 end
